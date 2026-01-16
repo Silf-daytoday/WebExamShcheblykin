@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интернет-магазин - Главная</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <!-- Уведомления -->
+    <div id="notifications"></div>
+
+    <!-- Хедер -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <span class="icon">🏪</span> E-Shop
+                </a>
+                
+                <!-- Поиск с автодополнением -->
+                <div class="search-container">
+                    <div class="search-wrapper">
+                        <input type="text" id="search-input" placeholder="Поиск товаров...">
+                        <div id="autocomplete-dropdown" class="autocomplete-dropdown"></div>
+                    </div>
+                    <button id="search-btn" class="btn btn-primary">
+                        <span class="icon">🔍</span>
+                        <span class="search-text">Найти</span>
+                    </button>
+                </div>
+                
+                <div class="header-icons">
+                    <a href="cart.html" class="icon-link">
+                        <span class="icon">🛒</span>
+                        <span id="cart-count" class="badge">0</span>
+                    </a>
+                    <a href="account.html" class="icon-link">
+                        <span class="icon">👤</span>
+                    </a>
+                </div>
+                
+                <!-- Мобильное меню -->
+                <button class="mobile-menu-btn">
+                    <span class="icon">☰</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Мобильное меню -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-content">
+            <a href="index.html" class="mobile-menu-item">
+                <span class="icon">🏠</span> Главная
+            </a>
+            <a href="cart.html" class="mobile-menu-item">
+                <span class="icon">🛒</span> Корзина
+                <span id="mobile-cart-count" class="mobile-badge">0</span>
+            </a>
+            <a href="account.html" class="mobile-menu-item">
+                <span class="icon">👤</span> Личный кабинет
+            </a>
+        </div>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="container main-container">
+        <!-- Сайдбар -->
+        <aside class="sidebar">
+            <h3><span class="icon">⚙️</span> Фильтры</h3>
+            <form id="filter-form" class="filter-form">
+                <div class="filter-group">
+                    <h4><span class="icon">🏷️</span> Категория</h4>
+                    <div id="category-filters" class="category-list"></div>
+                </div>
+                
+                <div class="filter-group">
+                    <h4><span class="icon">₽</span> Стоимость</h4>
+                    <div class="price-inputs">
+                        <div class="input-group">
+                            <label for="price-from">От</label>
+                            <input type="number" id="price-from" placeholder="0" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label for="price-to">До</label>
+                            <input type="number" id="price-to" placeholder="10000" min="0">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="checkbox">
+                        <input type="checkbox" id="discount-only">
+                        <span class="checkmark"></span>
+                        <span class="checkbox-text">
+                            <span class="icon">%</span> Только со скидкой
+                        </span>
+                    </label>
+                </div>
+                
+                <div class="filter-buttons">
+                    <button type="button" id="apply-filters" class="btn btn-primary btn-block">
+                        <span class="icon">✓</span> Применить
+                    </button>
+                    <button type="button" id="reset-filters" class="btn btn-secondary btn-block">
+                        <span class="icon">↻</span> Сбросить
+                    </button>
+                </div>
+            </form>
+        </aside>
+
+        <!-- Основной контент -->
+        <main class="content">
+            <div class="catalog-header">
+                <h1><span class="icon">⏹️</span> Каталог</h1>
+                <div class="sort-container">
+                    <label for="sort-select">Сортировка:</label>
+                    <select id="sort-select" class="sort-select">
+                        <option value="">Без сортировки</option>
+                        <option value="rating_desc">По рейтингу (убыв.)</option>
+                        <option value="rating_asc">По рейтингу (возр.)</option>
+                        <option value="price_desc">По цене (убыв.)</option>
+                        <option value="price_asc">По цене (возр.)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div id="catalog" class="catalog-grid">
+                <!-- Товары будут загружены через JS -->
+            </div>
+            
+            <div id="loading" class="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Загрузка товаров...</p>
+            </div>
+            
+            <div id="no-results" class="no-results" style="display: none;">
+                <span class="icon">🔍</span>
+                <h3>Товары не найдены</h3>
+                <p>Попробуйте изменить параметры поиска или фильтры</p>
+            </div>
+            
+            <div class="catalog-footer">
+                <button id="load-more" class="btn btn-secondary" style="display: none;">
+                    <span class="icon">🔄</span> Загрузить ещё
+                </button>
+                <div id="pagination-info" class="pagination-info"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><span class="icon">🏪</span> E-Shop</h3>
+                    <p>Лучший интернет-магазин с широким ассортиментом товаров</p>
+                </div>
+                <div class="footer-section">
+                    <h4><span class="icon">📞</span> Контакты</h4>
+                    <p>+8 (800) 555-35-35</p>
+                    <p>shcheblykin06@bk.ru</p>
+                    <p>Город, Улочная 123</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 E-Shop. Все права защищены честным словом.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Скрипты -->
+    <script src="utils.js"></script>
+    <script src="api.js"></script>
+    <script src="notifications.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>

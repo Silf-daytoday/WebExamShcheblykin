@@ -1,0 +1,472 @@
+/* Контейнер личного кабинета */
+.account-container {
+    padding: 30px 0;
+    min-height: calc(100vh - 140px);
+}
+
+.account-header-info {
+    flex: 1;
+    text-align: center;
+}
+
+.account-header-info h1 {
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 24px;
+}
+
+/* Секция заказов */
+.orders-section {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: var(--shadow);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.section-header h2 {
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Пустые заказы */
+.empty-orders {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.empty-orders i {
+    font-size: 64px;
+    color: var(--border-color);
+    margin-bottom: 20px;
+}
+
+.empty-orders h3 {
+    color: var(--gray-color);
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+.empty-orders p {
+    color: var(--gray-color);
+    margin-bottom: 30px;
+    opacity: 0.8;
+}
+
+/* Таблица заказов */
+.orders-table-container {
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+}
+
+.orders-table thead {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+}
+
+.orders-table th {
+    color: white;
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.orders-table tbody tr {
+    border-bottom: 1px solid var(--border-color);
+    transition: var(--transition);
+}
+
+.orders-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.orders-table td {
+    padding: 15px;
+    vertical-align: top;
+}
+
+/* Стили для ячеек таблицы */
+.order-number {
+    font-weight: 600;
+    color: var(--secondary-color);
+}
+
+.order-date {
+    white-space: nowrap;
+}
+
+.order-items {
+    max-width: 300px;
+}
+
+.order-items-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin: 0;
+    padding: 0;
+}
+
+.order-item {
+    background: #f8f9fa;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--gray-color);
+    display: inline-block;
+    margin: 2px;
+}
+
+.order-total {
+    font-weight: 700;
+    color: var(--primary-color);
+    white-space: nowrap;
+}
+
+.order-delivery {
+    white-space: nowrap;
+}
+
+.order-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.action-btn.view {
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+
+.action-btn.edit {
+    color: var(--success-color);
+    border: 1px solid var(--success-color);
+}
+
+.action-btn.delete {
+    color: var(--danger-color);
+    border: 1px solid var(--danger-color);
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+/* Модальные окна */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+    animation: fadeIn 0.3s ease;
+}
+
+.modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideIn 0.3s ease;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h3 {
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--gray-color);
+    padding: 5px;
+    transition: var(--transition);
+}
+
+.modal-close:hover {
+    color: var(--danger-color);
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    padding: 25px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Стили для формы редактирования в модальном окне */
+#edit-order-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#edit-order-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#edit-order-form .form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gray-color);
+}
+
+#edit-order-form .form-group input,
+#edit-order-form .form-group select,
+#edit-order-form .form-group textarea {
+    padding: 12px 15px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+    transition: var(--transition);
+    font-family: inherit;
+    width: 100%;
+}
+
+#edit-order-form .form-group input:focus,
+#edit-order-form .form-group select:focus,
+#edit-order-form .form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+}
+
+#edit-order-form .form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+#edit-order-form .form-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+#edit-order-form .checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+#edit-order-form .checkbox input[type="checkbox"] {
+    display: none;
+}
+
+#edit-order-form .checkmark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    position: relative;
+    transition: var(--transition);
+}
+
+#edit-order-form .checkbox input[type="checkbox"]:checked + .checkmark {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+#edit-order-form .checkbox input[type="checkbox"]:checked + .checkmark::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+#edit-order-form .checkbox-text {
+    font-size: 14px;
+    color: var(--dark-color);
+}
+
+/* Детали заказа в модальном окне */
+#view-order-details .detail-row {
+    display: flex;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#view-order-details .detail-row:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+#view-order-details .detail-label {
+    font-weight: 600;
+    color: var(--gray-color);
+    width: 150px;
+    flex-shrink: 0;
+}
+
+#view-order-details .detail-value {
+    flex: 1;
+    color: var(--dark-color);
+}
+
+#view-order-details .order-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+#view-order-details .order-item {
+    background: #f8f9fa;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Адаптивность */
+@media (min-width: 768px) {
+    #edit-order-form .form-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .account-header-info h1 {
+        font-size: 20px;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .orders-table {
+        font-size: 14px;
+    }
+    
+    .orders-table th,
+    .orders-table td {
+        padding: 10px;
+    }
+    
+    .order-actions {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .action-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .orders-section {
+        padding: 20px;
+    }
+    
+    .modal-body {
+        padding: 20px;
+    }
+    
+    #view-order-details .detail-row {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    #view-order-details .detail-label {
+        width: 100%;
+    }
+}

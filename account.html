@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет - E-Shop</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="account.css">
+</head>
+<body>
+    <!-- Уведомления -->
+    <div id="notifications"></div>
+
+    <!-- Хедер -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <span class="icon">🏪</span> E-Shop
+                </a>
+                
+                <div class="account-header-info">
+                    <h1><span class="icon">👤</span> Личный кабинет</h1>
+                </div>
+                
+                <div class="header-icons">
+                    <a href="index.html" class="icon-link">
+                        <span class="icon">🏠</span>
+                    </a>
+                    <a href="cart.html" class="icon-link">
+                        <span class="icon">🛒</span>
+                    </a>
+                </div>
+                
+                <!-- Мобильное меню -->
+                <button class="mobile-menu-btn">
+                    <span class="icon">☰</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Мобильное меню -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-content">
+            <a href="index.html" class="mobile-menu-item">
+                <span class="icon">🏠</span> Главная
+            </a>
+            <a href="cart.html" class="mobile-menu-item">
+                <span class="icon">🛒</span> Корзина
+            </a>
+            <a href="account.html" class="mobile-menu-item">
+                <span class="icon">👤</span> Личный кабинет
+            </a>
+        </div>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="container account-container">
+        <section class="orders-section">
+            <div class="section-header">
+                <h2><span class="icon">📋</span> Мои заказы</h2>
+                <button id="refresh-orders" class="btn btn-secondary">
+                    <span class="icon">🔄</span> Обновить
+                </button>
+            </div>
+            
+            <div id="orders-loading" class="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Загрузка заказов...</p>
+            </div>
+            
+            <div id="empty-orders" class="empty-orders" style="display: none;">
+                <span class="icon">📋</span>
+                <h3>Заказов пока нет</h3>
+                <p>Совершите свой первый заказ!</p>
+                <a href="index.html" class="btn btn-primary">
+                    <span class="icon">⏹️</span> Перейти в каталог
+                </a>
+            </div>
+            
+            <div class="orders-table-container">
+                <table id="orders-table" class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Дата оформления</th>
+                            <th>Состав заказа</th>
+                            <th>Стоимость</th>
+                            <th>Доставка</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders-body">
+                        <!-- Заказы будут загружены через JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <!-- Модальное окно просмотра -->
+    <div id="view-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><span class="icon">👁️</span> Просмотр заказа</h3>
+                <button class="modal-close"><span class="icon">✕</span></button>
+            </div>
+            <div class="modal-body">
+                <div id="view-order-details"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно редактирования -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><span class="icon">✏️</span> Редактирование заказа</h3>
+                <button class="modal-close"><span class="icon">✕</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-order-form">
+                    <input type="hidden" id="edit-order-id">
+                    
+                    <div class="form-group">
+                        <label for="edit-full-name">Имя и фамилия *</label>
+                        <input type="text" id="edit-full-name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit-phone">Телефон *</label>
+                        <input type="tel" id="edit-phone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit-email">Email *</label>
+                        <input type="email" id="edit-email" required>
+                    </div>
+                    
+                    <div class="checkbox">
+                        <input type="checkbox" id="edit-subscribe" checked>
+                        <span class="checkmark"></span>
+                        <span class="checkbox-text">Получать рассылку о новых товарах и акциях</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit-delivery-address">Адрес доставки *</label>
+                        <input type="text" id="edit-delivery-address" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="edit-delivery-date">Дата доставки *</label>
+                            <input type="date" id="edit-delivery-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-delivery-interval">Время доставки *</label>
+                            <select id="edit-delivery-interval" required>
+                                <option value="">Выберите время</option>
+                                <option value="08:00-12:00">08:00 - 12:00</option>
+                                <option value="12:00-14:00">12:00 - 14:00</option>
+                                <option value="14:00-18:00">14:00 - 18:00</option>
+                                <option value="18:00-22:00">18:00 - 22:00</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit-comment">Комментарий к заказу</label>
+                        <textarea id="edit-comment" rows="4"></textarea>
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <span class="icon">💾</span> Сохранить
+                        </button>
+                        <button type="button" class="btn btn-secondary modal-close">
+                            <span class="icon">✕</span> Отмена
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно удаления -->
+    <div id="delete-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><span class="icon">🗑️</span> Удаление заказа</h3>
+                <button class="modal-close"><span class="icon">✕</span></button>
+            </div>
+            <div class="modal-body">
+                <p>Вы уверены, что хотите удалить заказ?</p>
+                <div class="modal-actions">
+                    <button id="confirm-delete" class="btn btn-danger">
+                        <span class="icon">✓</span> Да
+                    </button>
+                    <button type="button" class="btn btn-secondary modal-close">
+                        <span class="icon">✕</span> Нет
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><span class="icon">🏪</span> E-Shop</h3>
+                    <p>Лучший интернет-магазин с широким ассортиментом товаров</p>
+                </div>
+                <div class="footer-section">
+                    <h4><span class="icon">📞</span> Контакты</h4>
+                    <p>+8 (800) 555-35-35</p>
+                    <p>shcheblykin06@bk.ru</p>
+                    <p>Город, Улочная 123</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 E-Shop. Все права защищены честным словом.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Скрипты -->
+    <script src="utils.js"></script>
+    <script src="api.js"></script>
+    <script src="notifications.js"></script>
+    <script src="account.js"></script>
+</body>
+</html>
